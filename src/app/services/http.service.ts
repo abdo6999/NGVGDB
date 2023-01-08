@@ -7,7 +7,6 @@ import { APIResponse, Game } from '../modele';
   providedIn: 'root'
 })
 export class HttpService {
-  url:string = 'https://api.rawg.io/api';
   constructor(private http : HttpClient) { }
   getGameList(
     ordering : string ,
@@ -22,9 +21,9 @@ export class HttpService {
     });
   }
   getGameDetails(id: string): Observable<Game> {
-    const gameInfoRequest = this.http.get(`${this.url}/games/${id}`);
-    const gameTrailersRequest = this.http.get(`${this.url}/games/${id}/movies`);
-    const gameScreenshotsRequest = this.http.get(`${this.url}/games/${id}/screenshots`);
+    const gameInfoRequest = this.http.get(`${env.BASE_URL}/games/${id}`);
+    const gameTrailersRequest = this.http.get(`${env.BASE_URL}/games/${id}/movies`);
+    const gameScreenshotsRequest = this.http.get(`${env.BASE_URL}/games/${id}/screenshots`);
     return forkJoin({gameInfoRequest, gameTrailersRequest, gameScreenshotsRequest}).pipe(
       map((resp: any)=> {
         return {
